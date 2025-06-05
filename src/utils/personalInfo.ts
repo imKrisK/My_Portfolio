@@ -26,7 +26,7 @@ type PersonalInfo = {
 const personalInfo: PersonalInfo = {
   name: "Kristoffer K.",
   title: "Full-Stack Developer",
-  description: "I build responsive web applications with modern technologies. Passionate about creating beautiful user experiences and solving complex problems with clean code.",
+  description: "I build responsive web applications with modern technologies. Passionate about creating interactive user experiences and solving complex problems with clean code.",
   email: "imKrisK@icloud.com",
   location: "Las Vegas, NV",
   github: "https://github.com/imkrisk",

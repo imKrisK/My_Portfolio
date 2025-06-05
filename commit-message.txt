@@ -1,0 +1,14 @@
+fix: resolve multiple critical issues in Next.js portfolio
+
+- Fix theme hydration issue with custom ThemeProvider component
+- Resolve module resolution errors by standardizing import paths
+- Fix "Prop className did not match" errors in theme toggle
+- Downgrade Next.js from v15.3.3 to v14.1.0 for compatibility
+- Restore missing Contact.tsx component 
+- Remove duplicate configuration files (postcss.config.mjs)
+- Clean webpack cache warnings for PostCSS configuration
+- Update personalInfo with correct contact information
+
+This commit addresses multiple issues that were causing the portfolio site to crash 
+or display incorrectly. The theme system now works correctly with proper server/client 
+hydration, and all components now render properly without hydration mismatches.
