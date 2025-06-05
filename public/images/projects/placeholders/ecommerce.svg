@@ -1,0 +1,9 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#f0f0f0" />
+  <text x="300" y="200" font-family="Arial" font-size="24" fill="#555" text-anchor="middle" dominant-baseline="middle">E-Commerce Dashboard</text>
+  <rect x="150" y="230" width="300" height="40" rx="5" fill="#ddd" />
+  <rect x="150" y="280" width="150" height="40" rx="5" fill="#ddd" />
+  <rect x="310" y="280" width="140" height="40" rx="5" fill="#ddd" />
+  <rect x="270" y="100" width="60" height="60" rx="30" fill="#3B82F6" />
+  <path d="M290 110 L310 110 L310 130 L325 130 L300 150 L275 130 L290 130 Z" fill="#fff" />
+</svg>

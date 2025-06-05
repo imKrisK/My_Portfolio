@@ -1,0 +1,100 @@
+# Modern Portfolio Website with Glassmorphism
+
+A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring beautiful glassmorphism UI effects throughout.
+
+## Features
+
+- **Modern Glassmorphism Design** - Beautiful glass-like effects with proper backdrop blur and transparency
+- **Responsive Layout** - Fully responsive for all device sizes from mobile to desktop
+- **Dark/Light Mode** - Dynamic theme switching with system preference detection
+- **Smooth Animations** - Subtle animations for enhanced user experience
+- **Optimized Performance** - Built with modern web standards for optimal loading times
+- **TypeScript Integration** - Type-safe code for better development experience
+
+## Components
+
+- **Navbar** - Responsive navigation with glassmorphism styling and theme toggle
+- **Hero** - Eye-catching introduction section with glass-effect cards
+- **Projects** - Showcase your work with filterable project cards
+- **Skills** - Visual representation of your technical abilities with progress indicators
+- **About** - Personal information and journey with a glass card design
+- **Contact** - Contact form with glassmorphism styling
+- **Footer** - Site information and social links
+- **Theme Toggle** - Switch between light and dark mode
+
+## Technical Implementation
+
+### Glassmorphism CSS Classes
+
+The site uses custom Tailwind utility classes for consistent glassmorphism effects:
+
+```css
+.glass-effect {
+  @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+}
+
+.glass-card {
+  @apply glass-effect rounded-xl transition-all duration-300;
+}
+
+.glass-effect-strong {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg;
+}
+
+.glass-effect-subtle {
+  @apply bg-white/40 dark:bg-gray-900/40 backdrop-blur-sm border border-white/10 dark:border-white/5 shadow-md;
+}
+```
+
+### Dark Mode Implementation
+
+The site uses Tailwind's dark mode with class strategy for theme toggling:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class',
+  // ...
+}
+```
+
+### Skills Visualization
+
+The Skills component offers a visually appealing way to showcase technical abilities with:
+
+- Category-based filtering
+- Progress bars with percentage indicators
+- Custom icons for each skill
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Customization
+
+### Personal Information
+
+Edit the `src/utils/personalInfo.ts` file to update your personal details, skills, and other information.
+
+### Project Data
+
+Add your projects in the Projects component or create a separate data file for better organization.
+
+### Theme and Colors
+
+Adjust the color scheme by modifying the Tailwind configuration and CSS variables in `globals.css`.
+
+## Deployment
+
+Deploy your portfolio easily on Vercel or any other hosting platform that supports Next.js applications.
+
+## Browser Support
+
+The glassmorphism effects rely on `backdrop-filter` which is supported in most modern browsers. For older browsers, the site will gracefully degrade to a solid background.
+
+---
+
+Built with ❤️ using Next.js, TypeScript, and Tailwind CSS
