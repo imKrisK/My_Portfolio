@@ -20,6 +20,8 @@ type PersonalInfo = {
   location: string;
   github: string;
   linkedin: string;
+  resumeUrl?: string; // Optional resume URL
+  resumeLastUpdated?: string; // Optional date when resume was last updated
   skills: SkillsByCategory;
 };
 
@@ -31,6 +33,8 @@ const personalInfo: PersonalInfo = {
   location: "Las Vegas, NV",
   github: "https://github.com/imkrisk",
   linkedin: "https://linkedin.com/in/Kristoffer.Kelly",
+  resumeUrl: "/resume/Kristoffer_Kelly_Resume.pdf",
+  resumeLastUpdated: "June 2025",
 
   // Skills data
   skills: {

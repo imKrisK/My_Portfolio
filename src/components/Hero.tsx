@@ -28,7 +28,7 @@ const Hero = () => {
           <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg max-w-lg">
             {personalInfo.description}
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap">
             <Link 
               href="#projects" 
               className="bg-blue-500/80 backdrop-blur-md hover:bg-blue-600/90 text-white font-medium px-6 py-3 rounded-md transition-all shadow-md hover:shadow-lg hover:scale-105"
@@ -41,6 +41,19 @@ const Hero = () => {
             >
               Contact Me
             </Link>
+            {personalInfo.resumeUrl && (
+              <a 
+                href={personalInfo.resumeUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-effect flex items-center gap-2 text-blue-500 hover:bg-blue-500/20 font-medium px-6 py-3 rounded-md transition-all shadow-md hover:shadow-lg hover:scale-105"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Resume
+              </a>
+            )}
           </div>
           <div className="flex gap-4 pt-4">
 
