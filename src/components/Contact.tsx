@@ -32,25 +32,17 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Temporarily disabled EmailJS to prevent network errors
-    // Simulating successful submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus({
-        success: true,
-        message: 'Form submission is currently disabled. Please contact directly via email.'
-      });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1000);
-    
-    /* Uncomment below when you have EmailJS credentials
     try {
       // Use environment variables for EmailJS credentials
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
       const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
 
-      if (formRef.current) {
+      // Check if EmailJS is configured properly
+      const isEmailJSConfigured = serviceId && templateId && publicKey;
+
+      if (isEmailJSConfigured && formRef.current) {
+        // Use EmailJS to send form
         await emailjs.sendForm(
           serviceId,
           templateId,
@@ -62,15 +54,22 @@ const Contact = () => {
           success: true,
           message: 'Message sent successfully! I\'ll get back to you soon.'
         });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
+      } else {
+        // Fallback if EmailJS is not configured
+        console.warn('EmailJS not configured. Form will not be submitted.');
+        setSubmitStatus({
+          success: true,
+          message: 'EmailJS is not configured. Please contact me directly via email.'
         });
       }
+      
+      // Reset form regardless
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus({
@@ -80,7 +79,6 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false);
     }
-    */
   };
 
   return (

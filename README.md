@@ -10,6 +10,7 @@ A modern, responsive, and customizable personal portfolio website built with Nex
 - **Dark/Light Mode**: Theme toggle with system preference detection
 - **Smooth Animations**: Clean animations for better user experience
 - **Contact Form**: Integrated with EmailJS for easy contact
+- **Resume Page**: Dedicated page to showcase and download your resume
 - **SEO Optimized**: Meta tags and Open Graph support
 - **Performance Optimized**: Fast loading times
 - **Accessible**: Following web accessibility best practices
@@ -21,6 +22,7 @@ A modern, responsive, and customizable personal portfolio website built with Nex
 - About Me
 - Projects Showcase
 - Skills
+- Resume Page (with PDF viewer & download)
 - Contact Form
 - Footer with Social Links
 
@@ -69,10 +71,11 @@ This portfolio is highly customizable. For detailed instructions, see our guides
 ### Quick Start Customization
 
 1. **Personal Information**: Edit `src/utils/personalInfo.ts` to update your name, title, and contact info
-2. **Projects**: Update the `projectsData` array in `src/components/Projects.tsx`
-3. **About Me**: Customize your bio in `src/components/About.tsx`
-4. **Skills**: Edit your skills in `src/components/Skills.tsx`
-5. **Colors**: Modify the color scheme in `tailwind.config.js`
+2. **Resume**: Update your resume data in `src/utils/personalInfo.ts` and replace the PDF in `public/resume/`
+3. **Projects**: Update the `projectsData` array in `src/components/Projects.tsx`
+4. **About Me**: Customize your bio in `src/components/About.tsx`
+5. **Skills**: Edit your skills in `src/components/Skills.tsx`
+6. **Colors**: Modify the color scheme in `tailwind.config.js`
 
 ## 📤 Deployment
 
