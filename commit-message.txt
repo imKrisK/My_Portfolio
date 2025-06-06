@@ -1,14 +1,18 @@
-fix: resolve multiple critical issues in Next.js portfolio
+feat: enhance resume functionality with interactive HTML view
 
-- Fix theme hydration issue with custom ThemeProvider component
-- Resolve module resolution errors by standardizing import paths
-- Fix "Prop className did not match" errors in theme toggle
-- Downgrade Next.js from v15.3.3 to v14.1.0 for compatibility
-- Restore missing Contact.tsx component 
-- Remove duplicate configuration files (postcss.config.mjs)
-- Clean webpack cache warnings for PostCSS configuration
-- Update personalInfo with correct contact information
+- Created dedicated HTML resume page at /resume/dedicated with tabbed interface
+- Updated personalInfo.ts to use "Kristoffer Kelly - CV.pdf" instead of "Kristoffer_Kelly_Resume.pdf"
+- Added cross-navigation between PDF and HTML resume views
+- Enhanced Navbar with dropdown menu for resume options
+- Fixed PDF loading with better client-side detection and error handling
+- Added fallback UI for cases when PDF cannot be loaded
+- Updated package.json with scripts for resume management:
+  - setup-resume: Copies PDF files to public directory
+  - update-resume-info: Updates resume data automatically
+  - check-pdfs: Verifies PDF files exist in correct locations
+- Enhanced documentation with comprehensive RESUME_IMPLEMENTATION.md
 
-This commit addresses multiple issues that were causing the portfolio site to crash 
-or display incorrectly. The theme system now works correctly with proper server/client 
-hydration, and all components now render properly without hydration mismatches.
+This commit significantly improves the resume experience by offering visitors both 
+a PDF version and an interactive HTML version with detailed sections for experience, 
+education, and skills. The implementation ensures proper file management, error handling, 
+and consistent data between both views.

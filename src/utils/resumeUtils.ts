@@ -9,6 +9,23 @@ export const getResumeUrl = (): string => {
 };
 
 /**
+ * Trigger resume download programmatically
+ * @param url URL of the resume file to download
+ * @param filename Optional custom filename for the downloaded file
+ */
+export const downloadResume = (url: string, filename?: string): void => {
+  if (typeof window === 'undefined') return; // Skip if not in browser
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename || url.split('/').pop() || 'resume.pdf';
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+/**
  * Get the resume metadata from personalInfo
  * @returns Object containing resume metadata
  */

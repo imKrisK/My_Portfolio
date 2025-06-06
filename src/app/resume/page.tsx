@@ -1,29 +1,46 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import personalInfo from '../../utils/personalInfo';
+import { getResumeMetadata } from '../../utils/resumeUtils';
 
 export default function ResumePage() {
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Use the new resume object if available, otherwise fall back to old properties
-  const resumeData = personalInfo.resume || {
-    url: personalInfo.resumeUrl || '',
-    lastUpdated: personalInfo.resumeLastUpdated || '',
-    pages: 3,
-    highlights: [
-      "Full-Stack Development",
-      "React & Next.js",
-      "TypeScript & JavaScript", 
-      "Node.js & Express",
-      "MongoDB & PostgreSQL"
-    ]
-  };
+  // Use resumeUtils to get structured resume data
+  const resumeData = getResumeMetadata();
 
+  // State to track PDF loading errors
+  const [pdfError, setPdfError] = useState(false);
+
+  // Handle client-side rendering for the iframe
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    // Add a small delay to ensure PDF loading animation shows
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    
+    // Check if PDF file exists
+    const checkPdfExists = async () => {
+      try {
+        const response = await fetch(resumeData.url, { method: 'HEAD' });
+        if (!response.ok) {
+          console.error('PDF file not found:', resumeData.url);
+          setPdfError(true);
+        }
+      } catch (error) {
+        console.error('Error checking PDF file:', error);
+        setPdfError(true);
+      }
+    };
+    
+    checkPdfExists();
+    
+    return () => clearTimeout(timer);
+  }, [resumeData.url]);
 
   if (!resumeData.url) {
     return (
@@ -53,20 +70,38 @@ export default function ResumePage() {
             </p>
           </div>
           <div className="flex gap-4">
-            <a 
-              href={resumeData.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                const { downloadResume } = require('../../utils/resumeUtils');
+                downloadResume(resumeData.url, resumeData.fileName);
+              }}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Download
+            </button>
+            <a 
+              href={resumeData.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-md transition-colors text-center flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              Open in New Tab
             </a>
             <Link 
+              href="/resume/dedicated"
+              className="border border-blue-500 bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-md transition-colors text-center"
+            >
+              Interactive Resume
+            </Link>
+            <Link 
               href="/"
-              className="border border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-md transition-colors text-center"
+              className="border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 px-4 py-2 rounded-md transition-colors text-center"
             >
               Back to Home
             </Link>
@@ -76,19 +111,59 @@ export default function ResumePage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
           {/* Main PDF viewer (taking 3/4 of the screen on large displays) */}
           <div className="lg:col-span-3 w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-            <Suspense fallback={
+            {isClient ? (
+              <>
+                {pdfError ? (
+                  <div className="flex flex-col items-center justify-center p-8 h-[calc(100vh-160px)] min-h-[600px]">
+                    <svg className="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <h3 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">Resume PDF cannot be displayed</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 text-center">
+                      The resume file could not be loaded in the viewer. Please use the download button above to view the PDF.
+                    </p>
+                    <button
+                      onClick={() => {
+                        const { downloadResume } = require('../../utils/resumeUtils');
+                        downloadResume(resumeData.url, resumeData.fileName);
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md transition-colors flex items-center gap-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download Resume
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative w-full h-[calc(100vh-160px)] min-h-[600px]">
+                    <iframe
+                      src={`${resumeData.url}${isLoading ? '' : '#view=FitH'}`}
+                      className="w-full h-full border-0"
+                      title="Resume"
+                      onLoad={() => setIsLoading(false)}
+                      onError={(e) => {
+                        console.error('Error loading PDF:', e);
+                        setPdfError(true);
+                        setIsLoading(false);
+                      }}
+                    />
+                    {isLoading && (
+                      <div className="absolute inset-0 flex justify-center items-center bg-white/80 dark:bg-gray-800/80">
+                        <div className="flex flex-col items-center">
+                          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">Loading resume...</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            ) : (
               <div className="flex justify-center items-center py-16">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
               </div>
-            }>
-              {isClient && (
-                <iframe
-                  src={`${resumeData.url}#view=FitH`}
-                  className="w-full h-[calc(100vh-160px)] min-h-[600px] border-0"
-                  title="Resume"
-                />
-              )}
-            </Suspense>
+            )}
           </div>
 
           {/* Resume sidebar with highlights */}
@@ -107,40 +182,70 @@ export default function ResumePage() {
               </ul>
             </div>
 
-            {personalInfo.resume?.experience && personalInfo.resume.experience.length > 0 && (
+            {resumeData.experience && resumeData.experience.length > 0 && (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-5 mb-5">
                 <h2 className="text-xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">Experience</h2>
                 <div className="space-y-4">
-                  {personalInfo.resume.experience.map((exp, index) => (
+                  {resumeData.experience.map((exp, index) => (
                     <div key={index} className="border-l-2 border-blue-500 pl-4 py-1">
                       <h3 className="font-medium text-lg">{exp.position}</h3>
                       <p className="text-gray-600 dark:text-gray-400">{exp.company}</p>
                       <p className="text-sm text-gray-500 dark:text-gray-500 mb-2">
                         {exp.startDate} - {exp.endDate || 'Present'} • {exp.location}
                       </p>
+                      {exp.responsibilities && exp.responsibilities.length > 0 && (
+                        <div className="mt-2 text-sm">
+                          <p className="text-gray-700 dark:text-gray-300 font-medium mb-1">Key Responsibilities:</p>
+                          <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+                            {exp.responsibilities.slice(0, 2).map((item, i) => (
+                              <li key={i}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {personalInfo.resume?.education && personalInfo.resume.education.length > 0 && (
+            {resumeData.education && resumeData.education.length > 0 && (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-5 mb-5">
                 <h2 className="text-xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">Education</h2>
                 <div className="space-y-4">
-                  {personalInfo.resume.education.map((edu, index) => (
-                    <div key={index}>
+                  {resumeData.education.map((edu, index) => (
+                    <div key={index} className="border-l-2 border-blue-500 pl-4 py-1">
                       <h3 className="font-medium">{edu.degree} in {edu.field}</h3>
-                      <p>{edu.institution}</p>
+                      <p className="text-gray-600 dark:text-gray-400">{edu.institution}</p>
                       <p className="text-sm text-gray-500 dark:text-gray-500">
                         {edu.startDate} - {edu.endDate || 'Present'}
+                        {edu.location && <span> • {edu.location}</span>}
                       </p>
+                      {edu.description && (
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{edu.description}</p>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
+            {resumeData.keywords && resumeData.keywords.length > 0 && (
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-5 mb-5">
+                <h2 className="text-xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">Key Areas</h2>
+                <div className="flex flex-wrap gap-2">
+                  {resumeData.keywords.map((keyword, index) => (
+                    <span 
+                      key={index} 
+                      className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden p-5">
               <h2 className="text-xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">Connect With Me</h2>
               <div className="space-y-4">

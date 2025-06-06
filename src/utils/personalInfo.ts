@@ -69,58 +69,67 @@ const personalInfo: PersonalInfo = {
   location: "Las Vegas, NV",
   github: "https://github.com/imkrisk",
   linkedin: "https://linkedin.com/in/Kristoffer.Kelly",
-  resumeUrl: "/resume/Kristoffer_Kelly_Resume.pdf", // Kept for backward compatibility
-  resumeLastUpdated: "June 2025", // Kept for backward compatibility
+  resumeUrl: "/resume/Kristoffer Kelly - CV.pdf", // Kept for backward compatibility
+  resumeLastUpdated: "June 6, 2025", // Kept for backward compatibility
   resume: {
-    url: "/resume/Kristoffer_Kelly_Resume.pdf",
-    lastUpdated: "June 5, 2025",
-    pages: 3,
-    fileName: "Kristoffer_Kelly_Resume.pdf",
+    url: "/resume/Kristoffer Kelly - CV.pdf",
+    lastUpdated: "June 6, 2025",
+    pages: 2,
+    fileName: "Kristoffer Kelly - CV.pdf",
     highlights: [
       "Full-Stack Development",
       "React & Next.js",
       "TypeScript & JavaScript",
       "Node.js & Express",
-      "MongoDB & PostgreSQL"
+      "MongoDB & PostgreSQL",
+      "UI/UX Design"
     ],
     education: [
       {
         institution: "University of Nevada, Las Vegas",
-        degree: "Bachelor of Science",
-        field: "Computer Science",
-        startDate: "2018",
-        endDate: "2022",
-        location: "Las Vegas, NV"
+        Certificate of Achievement: "Software Engineering",
+        institution: "Institution of Data, Charleston, SC", 
+        Certificate of Achievement: "Software Engineering",
+        field: "Software Engineering & Web Development",
+        location: "Las Vegas, NV",
+        description: "Focused on software engineering and web development technologies."
       }
     ],
     experience: [
       {
-        company: "Tech Solutions Inc.",
-        position: "Senior Full-Stack Developer",
-        startDate: "January 2023",
-        endDate: "Present",
-        location: "Remote",
+        company: "CO2 Monitoring, LLC",
+        position: "Permit Specialist",
+        startDate: "2021",
+        endDate: "2023",
+        location: "Las Vegas, NV",
         responsibilities: [
-          "Developed and maintained web applications using React, Next.js, and Node.js",
-          "Designed and implemented RESTful APIs and GraphQL services",
-          "Collaborated with cross-functional teams to deliver high-quality software solutions"
+          "Effectively communicate with various state building divisions, fire departments, and the Adjuring Home Jurisdiction regarding the standard procedure for obtaining permits for minor mechanical installations, such as bulk CO2 tanks and the company’s patented monitoring system.",
+          "Schedule field technicians to perform draft drawings of the store layout and the locations of objects, including the CO2 tank and the rooms where the monitoring system will be installed.",
+          "Obtain copies of the office drawings and recreate the floor plan using Visio Studio software.",
+          "Perform data entry, including completing online permit applications via jurisdiction websites and submitting both floor plans and permit applications through online portals. Communicate effectively with building and fire officials who require additional information. Submit and complete payments.",
+          "Prepare field technicians for installation projects by assembling a copy of the approved floor plan, which is sealed by the building and/or fire district, along with a permit that will be posted near the construction area.",
+          "Perform follow-up with field technicians during installation periods and project completions.",
+          "Manage company databases, including approved floor plans and permits, obtained from the jurisdiction’s portal. Maintain a comprehensive record of approved floor plans and permits in both a physical and virtual filing system.",
         ]
       },
       {
-        company: "Web Innovations LLC",
-        position: "Frontend Developer",
-        startDate: "May 2022",
-        endDate: "December 2022",
-        location: "Las Vegas, NV",
+        company: "Portfolio Recovery Associates, LLC",
+        position: "Operations Manager",
+        startDate: "2017",
+        endDate: "2021",
+        location: "San Diego, CA",
         responsibilities: [
-          "Built responsive user interfaces with React and Tailwind CSS",
-          "Implemented state management solutions using Redux and Context API",
-          "Optimized application performance and improved user experience"
+          "Professionalism: Demonstrated exceptional professionalism in interactions with clients, attorneys, and managers.",
+          "Daily Operations and High-Volume Projects: Conducted managerial meetings with co-managers and attorneys to discuss daily operations and high-volume projects. Addressed operational issues and assisted with ocean shift operations.",
+          "New Prospect Interviews and Hiring Process: Conducted in-depth interviews with new prospects and completed the hiring process effectively by communicating with the Human Resource department.",
+          "Data Analysis and Process Inefficiencies: Conducted in-depth data analysis using advanced Excel functions to identify and rectify process inefficiencies in five or more departments.",
+          "Cross-Functional Team Collaboration: Partnered with cross-functional teams to design process improvement initiatives.",
+          "Team Coaching and Bottleneck Identification: Coached cross-functional teams to identify and eliminate process bottlenecks, thereby enhancing overall operational efficiency."
         ]
       }
     ],
     sections: ["Experience", "Education", "Skills", "Projects", "Certifications"],
-    keywords: ["Full-Stack", "Web Development", "React", "Next.js", "Node.js", "TypeScript"]
+    keywords: ["Full-Stack", "Web Development", "React", "Next.js", "Node.js", "TypeScript", "Responsive Design"]
   },
 
   // Skills data
@@ -140,11 +149,15 @@ const personalInfo: PersonalInfo = {
       { name: 'GraphQL', level: 65 },
     ],
     tools: [
-      { name: 'Git', level: 85 },
+      { name: 'GitHub', level: 85 },
       { name: 'Docker', level: 70 },
       { name: 'AWS', level: 65 },
       { name: 'Figma', level: 75 },
+      { name: 'Bravo Studio & Vision', level: 80 },
       { name: 'VS Code', level: 90 },
+      { name: 'Visio Studio', level: 75 },
+      { name: 'Slack', level: 80 },
+      
     ],
   },
 };
