@@ -10,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  output: 'standalone', // Use standalone output instead of static export
 };
 
 module.exports = nextConfig;

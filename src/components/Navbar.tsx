@@ -45,9 +45,9 @@ const Navbar = () => {
           <Link href="#about" className="hover:text-blue-500 transition-colors">
             About
           </Link>
-          {personalInfo.resumeUrl && (
+          {(personalInfo.resume?.url || personalInfo.resumeUrl) && (
             <a 
-              href={personalInfo.resumeUrl}
+              href={personalInfo.resume?.url || personalInfo.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 transition-colors flex items-center gap-1"
@@ -136,9 +136,9 @@ const Navbar = () => {
             >
               About
             </Link>
-            {personalInfo.resumeUrl && (
+            {(personalInfo.resume?.url || personalInfo.resumeUrl) && (
               <a 
-                href={personalInfo.resumeUrl}
+                href={personalInfo.resume?.url || personalInfo.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-blue-500 transition-colors py-2 px-4 flex items-center gap-2"

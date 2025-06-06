@@ -41,9 +41,9 @@ const Hero = () => {
             >
               Contact Me
             </Link>
-            {personalInfo.resumeUrl && (
+            {(personalInfo.resume?.url || personalInfo.resumeUrl) && (
               <a 
-                href={personalInfo.resumeUrl} 
+                href={personalInfo.resume?.url || personalInfo.resumeUrl} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass-effect flex items-center gap-2 text-blue-500 hover:bg-blue-500/20 font-medium px-6 py-3 rounded-md transition-all shadow-md hover:shadow-lg hover:scale-105"
