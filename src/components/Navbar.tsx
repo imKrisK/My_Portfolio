@@ -1,14 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import personalInfo from '../utils/personalInfo';
 import { useTheme } from './ThemeProvider';
+import { downloadResume } from '../utils/resumeUtils';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [resumeDropdownOpen, setResumeDropdownOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname() || '';
+  const isHomePage = pathname === '/';
+  const isResumePage = pathname.startsWith('/resume');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,10 +23,30 @@ const Navbar = () => {
     
     window.addEventListener('scroll', handleScroll);
     
+    // Close dropdown when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.resume-dropdown-container')) {
+        setResumeDropdownOpen(false);
+      }
+    };
+    
+    // Handle keyboard navigation for accessibility
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && resumeDropdownOpen) {
+        setResumeDropdownOpen(false);
+      }
+    };
+    
+    window.addEventListener('click', handleClickOutside);
+    window.addEventListener('keydown', handleKeyDown);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [resumeDropdownOpen]); // Added resumeDropdownOpen as a dependency
 
   return (
     <header 
@@ -36,41 +62,91 @@ const Navbar = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="#projects" className="hover:text-blue-500 transition-colors">
+          <Link 
+            href={isHomePage ? "#projects" : "/#projects"} 
+            className="hover:text-blue-500 transition-colors"
+          >
             Projects
           </Link>
-          <Link href="#skills" className="hover:text-blue-500 transition-colors">
+          <Link 
+            href={isHomePage ? "#skills" : "/#skills"} 
+            className="hover:text-blue-500 transition-colors"
+          >
             Skills
           </Link>
-          <Link href="#about" className="hover:text-blue-500 transition-colors">
+          <Link 
+            href={isHomePage ? "#about" : "/#about"} 
+            className="hover:text-blue-500 transition-colors"
+          >
             About
           </Link>
           {(personalInfo.resume?.url || personalInfo.resumeUrl) && (
-            <div className="relative group">
-              <button className="hover:text-blue-500 transition-colors flex items-center gap-1 cursor-pointer group-hover:text-blue-500">
+            <div className="relative resume-dropdown-container">
+              <button 
+                onClick={() => setResumeDropdownOpen(!resumeDropdownOpen)}
+                className={`${isResumePage ? 'text-blue-500' : 'hover:text-blue-500'} transition-colors flex items-center gap-1 cursor-pointer`}
+                aria-expanded={resumeDropdownOpen}
+                aria-haspopup="true"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Resume
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 ml-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
+                  style={{ transform: resumeDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
-              <div className="hidden group-hover:block absolute z-10 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg">
-                <div className="py-1">
-                  <Link href="/resume" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    View PDF
-                  </Link>
-                  <Link href="/resume/dedicated" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    Interactive Resume
-                  </Link>
-                  <a 
-                    href={personalInfo.resume?.url || personalInfo.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Download PDF
-                  </a>
+              {resumeDropdownOpen && (
+                <div 
+                  className="absolute z-10 mt-2 w-60 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="resume-menu-button"
+                >
+                  <div className="py-1">
+                    <Link 
+                      href="/resume" 
+                      className={`flex items-center gap-2 px-4 py-2 text-sm ${pathname === '/resume' ? 'bg-gray-100 dark:bg-gray-700 text-blue-500' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} transition-colors`}
+                      onClick={() => setResumeDropdownOpen(false)}
+                      role="menuitem"
+                      aria-current={pathname === '/resume' ? 'page' : undefined}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                      View PDF
+                    </Link>
+                    <Link 
+                      href="/resume/dedicated" 
+                      className={`flex items-center gap-2 px-4 py-2 text-sm ${pathname === '/resume/dedicated' ? 'bg-gray-100 dark:bg-gray-700 text-blue-500' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} transition-colors`}
+                      onClick={() => setResumeDropdownOpen(false)}
+                      role="menuitem"
+                      aria-current={pathname === '/resume/dedicated' ? 'page' : undefined}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Interactive Resume
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        downloadResume(personalInfo.resume?.url || personalInfo.resumeUrl || '', personalInfo.resume?.fileName);
+                        setResumeDropdownOpen(false);
+                      }}
+                      className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                      role="menuitem"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download PDF
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
           <Link href="#contact" className="glass-effect-subtle px-4 py-2 rounded-full hover:bg-blue-500/10 hover:scale-105 transition-all text-blue-500">
@@ -131,21 +207,21 @@ const Navbar = () => {
         <div className="md:hidden glass-effect-strong absolute top-full left-0 right-0 py-4 px-4 shadow-lg">
           <nav className="flex flex-col space-y-4">
             <Link 
-              href="#projects" 
+              href={isHomePage ? "#projects" : "/#projects"} 
               className="hover:text-blue-500 transition-colors py-2 px-4"
               onClick={() => setMobileMenuOpen(false)}
             >
               Projects
             </Link>
             <Link 
-              href="#skills" 
+              href={isHomePage ? "#skills" : "/#skills"} 
               className="hover:text-blue-500 transition-colors py-2 px-4"
               onClick={() => setMobileMenuOpen(false)}
             >
               Skills
             </Link>
             <Link 
-              href="#about" 
+              href={isHomePage ? "#about" : "/#about"} 
               className="hover:text-blue-500 transition-colors py-2 px-4"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -154,12 +230,15 @@ const Navbar = () => {
             {(personalInfo.resume?.url || personalInfo.resumeUrl) && (
               <>
                 <div className="py-2 px-4 mb-1">
-                  <span className="font-medium text-gray-800 dark:text-gray-200">Resume Options:</span>
+                  <span className={`font-medium ${isResumePage ? 'text-blue-500' : 'text-gray-800 dark:text-gray-200'}`}>Resume Options:</span>
                 </div>
                 <Link 
                   href="/resume"
-                  className="ml-4 pl-4 border-l-2 border-gray-300 dark:border-gray-700 hover:text-blue-500 transition-colors py-1 px-4 flex items-center gap-2"
+                  className={`ml-4 pl-4 border-l-2 ${pathname === '/resume' ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'hover:text-blue-500'} border-blue-500 dark:border-blue-400 transition-colors py-2 px-4 flex items-center gap-2`}
                   onClick={() => setMobileMenuOpen(false)}
+                  role="menuitem"
+                  aria-label="View Resume PDF"
+                  aria-current={pathname === '/resume' ? 'page' : undefined}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -169,26 +248,31 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   href="/resume/dedicated"
-                  className="ml-4 pl-4 border-l-2 border-gray-300 dark:border-gray-700 hover:text-blue-500 transition-colors py-1 px-4 flex items-center gap-2"
+                  className={`ml-4 pl-4 border-l-2 ${pathname === '/resume/dedicated' ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'hover:text-blue-500'} border-blue-500 dark:border-blue-400 transition-colors py-2 px-4 flex items-center gap-2`}
                   onClick={() => setMobileMenuOpen(false)}
+                  role="menuitem"
+                  aria-label="View Interactive Resume"
+                  aria-current={pathname === '/resume/dedicated' ? 'page' : undefined}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   Interactive Resume
                 </Link>
-                <a 
-                  href={personalInfo.resume?.url || personalInfo.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-4 pl-4 border-l-2 border-gray-300 dark:border-gray-700 hover:text-blue-500 transition-colors py-1 px-4 flex items-center gap-2"
-                  onClick={() => setMobileMenuOpen(false)}
+                <button 
+                  onClick={() => {
+                    downloadResume(personalInfo.resume?.url || personalInfo.resumeUrl || '', personalInfo.resume?.fileName);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="ml-4 pl-4 border-l-2 border-blue-500 dark:border-blue-400 hover:text-blue-500 transition-colors py-2 px-4 flex items-center gap-2 w-full text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                  role="menuitem"
+                  aria-label="Download Resume PDF"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   Download PDF
-                </a>
+                </button>
               </>
             )}
             <Link 

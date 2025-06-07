@@ -9,6 +9,8 @@ This directory contains comprehensive guides to help you customize, deploy, and 
 - [**VERCEL_DEPLOYMENT.md**](/docs/VERCEL_DEPLOYMENT.md) - Detailed guide specific to Vercel deployment
 - [**EMAILJS_SETUP.md**](/docs/EMAILJS_SETUP.md) - Configure EmailJS for the contact form
 - [**PROJECT_SCREENSHOTS.md**](/docs/PROJECT_SCREENSHOTS.md) - Tips for creating professional project screenshots
+- [**RESUME_IMPLEMENTATION.md**](/docs/RESUME_IMPLEMENTATION.md) - Details of resume feature implementation
+- [**CODE_CITATIONS.md**](/docs/CODE_CITATIONS.md) - Attribution for third-party code used in the project
 
 ## Getting Started
 

@@ -87,14 +87,37 @@ const personalInfo: PersonalInfo = {
     education: [
       {
         institution: "University of Nevada, Las Vegas",
-        Certificate of Achievement: "Software Engineering",
-        institution: "Institution of Data, Charleston, SC", 
-        Certificate of Achievement: "Software Engineering",
-        field: "Software Engineering & Web Development",
-        location: "Las Vegas, NV",
+        degree: "Certificate of Achievement",
+        field: "Software Engineering",
+        startDate: "2024",
+        endDate: "2025",
         description: "Focused on software engineering and web development technologies."
-      }
-    ],
+      },
+      {
+        institution: "Institution of Data, Charleston, SC",
+        degree: "Certificate of Achievement",
+        field: "Software Engineering & Web Development",
+        startDate: "2024",
+        endDate: "2025",
+        description: "Specialized program covering full-stack web development and software engineering principles."
+      },
+      {      
+        institution: "University of California, San Diego",
+        degree: "Specialized Certificate",
+        field: "Unix System Administration",
+        startDate: "2012",
+        endDate: "2013",
+        description: "Completed a specialized certificate program in Unix System Administration, focusing on system management and network administration skills.",
+    },
+    {      
+        institution: "SDCE, San Diego, CA",
+        degree: "Certificate of Achievement",
+        field: "Web Servicer Maintenance & Security",
+        startDate: "2011",
+        endDate: "2012",
+        description: "Completed a certificate program in Web Servicer Maintenance & Security, focusing on web server management, security protocols, and best practices for maintaining secure web applications.",
+    },
+      ],
     experience: [
       {
         company: "CO2 Monitoring, LLC",
@@ -157,7 +180,7 @@ const personalInfo: PersonalInfo = {
       { name: 'VS Code', level: 90 },
       { name: 'Visio Studio', level: 75 },
       { name: 'Slack', level: 80 },
-      
+
     ],
   },
 };

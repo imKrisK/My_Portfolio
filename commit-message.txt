@@ -1,18 +1,33 @@
-feat: enhance resume functionality with interactive HTML view
+feat(resume): enhance resume navigation and accessibility
 
-- Created dedicated HTML resume page at /resume/dedicated with tabbed interface
-- Updated personalInfo.ts to use "Kristoffer Kelly - CV.pdf" instead of "Kristoffer_Kelly_Resume.pdf"
-- Added cross-navigation between PDF and HTML resume views
-- Enhanced Navbar with dropdown menu for resume options
-- Fixed PDF loading with better client-side detection and error handling
-- Added fallback UI for cases when PDF cannot be loaded
-- Updated package.json with scripts for resume management:
-  - setup-resume: Copies PDF files to public directory
-  - update-resume-info: Updates resume data automatically
-  - check-pdfs: Verifies PDF files exist in correct locations
-- Enhanced documentation with comprehensive RESUME_IMPLEMENTATION.md
+This commit improves the existing resume functionality across the portfolio:
 
-This commit significantly improves the resume experience by offering visitors both 
-a PDF version and an interactive HTML version with detailed sections for experience, 
-education, and skills. The implementation ensures proper file management, error handling, 
-and consistent data between both views.
+- Navigation & UI Improvements:
+  - Added consistent breadcrumb navigation to PDF and Interactive resume views
+  - Created direct navigation links between resume formats (PDF <-> Interactive)
+  - Improved button layouts and visual hierarchy for better UX
+  - Enhanced visual feedback with consistent styling for active states
+
+- Download Functionality Enhancements:
+  - Enhanced downloadResume utility with proper Promise-based return values
+  - Added file availability check before initiating downloads
+  - Implemented visual feedback during download processes
+  - Added fallback mechanisms when downloads fail
+
+- Accessibility Upgrades:
+  - Added keyboard shortcuts (Alt+1/2/3) for Interactive Resume tab navigation
+  - Implemented visual indicators for keyboard shortcuts
+  - Enhanced focus management and keyboard navigation
+  - Improved ARIA attributes across all resume components
+  - Added proper aria-current for active pages/tabs
+
+- Error Handling:
+  - Improved PDF viewer with better error detection and recovery
+  - Enhanced feedback when PDF cannot be displayed
+  - Fixed error handling in the resume dropdown menu
+
+Modified files:
+- src/app/resume/page.tsx
+- src/app/resume/dedicated/page.tsx
+- src/utils/resumeUtils.ts
+- src/components/Navbar.tsx

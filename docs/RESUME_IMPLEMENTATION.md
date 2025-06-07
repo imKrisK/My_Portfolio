@@ -92,7 +92,9 @@ To customize the interactive resume view:
 
 The website provides several ways to access the resume:
 
-1. **Navbar** - Dropdown menu with options for PDF View, Interactive View, and Download
+1. **Navbar** - Clickable dropdown menu with options for PDF View, Interactive View, and Download
+   - Uses state-based toggle for better accessibility and cross-browser compatibility
+   - Closes when clicking outside or selecting an option
 2. **Hero Section** - Direct link to download the resume
 3. **Cross-navigation** - Links between PDF and Interactive views
 
