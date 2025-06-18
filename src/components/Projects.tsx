@@ -7,30 +7,31 @@ import Image from 'next/image';
 const projectsData = [
   {
     id: 1,
-    title: 'E-Commerce Dashboard',
-    description: 'A comprehensive admin dashboard for e-commerce businesses with real-time analytics, inventory management, and order processing features.',
+    title: 'Food Truck Ordering Platform',
+    description: 'A full-stack e-commerce dashboard for managing food truck orders, inventory, and customer interactions with real-time analytics.',
     tags: ['React', 'Node.js', 'MongoDB', 'Chart.js'],
     imageUrl: '/images/projects/placeholders/ecommerce.svg',
     liveUrl: 'https://example.com/demo1',
-    repoUrl: 'https://github.com/johndoe/ecommerce-dashboard'
+    repoUrl: 'https://github.com/imKrisK/m7-localfoodtruck.git'
   },
   {
     id: 2,
-    title: 'Task Management App',
-    description: 'A collaborative task management application with real-time updates, user roles, and project tracking capabilities.',
+    title: 'Pokemon Online Streaming Platform',
+    description: 'A streaming platform for watching Pokémon online auction and purchases, featuring a user-friendly interface and responsive design.',
     tags: ['Next.js', 'JavaScript', 'PostgreSQL', 'Tailwind CSS'],
     imageUrl: '/images/projects/placeholders/taskapp.svg',
     liveUrl: 'https://example.com/demo2',
-    repoUrl: 'https://github.com/johndoe/task-management'
+    repoUrl: 'https://github.com/imKrisK/slider.git'
   },
   {
     id: 3,
-    title: 'Weather Forecast PWA',
-    description: 'A progressive web application that provides weather forecasts with location-based services and offline capabilities.',
+    title: 'Mobile Food Ordering Platform',
+    description: 'A Progressive Web App (PWA) for ordering food on the go, utilizing geolocation to find nearby food trucks and place orders seamlessly.',
     tags: ['React', 'Weather API', 'PWA', 'Geolocation'],
     imageUrl: '/images/projects/placeholders/weather.svg',
     liveUrl: 'https://example.com/demo3',
-    repoUrl: 'https://github.com/johndoe/weather-pwa'
+    repoUrl: 'https://www.figma.com/design/K6vgdRQJNdoRTzOKcG8vIa/Presentation?node-id=0-1&t=22axnoq2LVKkVk2N-1',
+    
   },
 ];
 

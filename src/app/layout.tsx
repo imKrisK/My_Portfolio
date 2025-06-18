@@ -1,7 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import { GeistSans, GeistMono } from '@/utils/fonts';
 import Navbar from '@/components/Navbar';
 import Analytics from '@/components/Analytics';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}>
+      <body className="font-sans">
         <ThemeProvider>
           <div className="min-h-screen flex flex-col">
             <Navbar />

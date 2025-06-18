@@ -1,5 +1,5 @@
 {
-  "name": "kristoffer-kelly-portfolio",
+  "name": "Kristoffer-Kelly-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,15 +26,14 @@
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "autoprefixer": "10.4.16",
-    "browserslist": "4.22.3",
-    "caniuse-lite": "1.0.30001585",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.1.0",
-    "node-releases": "2.0.13",
-    "postcss": "8.4.33",
-    "postcss-selector-parser": "6.0.15",
-    "tailwindcss": "3.4.1",
-    "typescript": "5.3.3"
+    "autoprefixer": "^10.4.15",
+    "browserslist": "^4.22.1",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.0",
+    "node-releases": "^2.0.14",
+    "postcss": "^8.4.31",
+    "postcss-selector-parser": "^6.0.10",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.4.2"
   }
 }

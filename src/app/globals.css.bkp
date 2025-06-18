@@ -39,72 +39,32 @@ body {
   background-attachment: fixed;
 }
 
-/* Glassmorphism utility classes */
-.glass-effect {
-  background: var(--glass-background);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-}
+@layer components {
+  /* Glassmorphism utility classes */
+  .glass-effect {
+    @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+  }
 
-.glass-card {
-  background: var(--glass-background);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: 1rem;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  transition: all 0.3s ease;
-}
+  .glass-card {
+    @apply glass-effect rounded-xl transition-all duration-300;
+  }
 
-.glass-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--glass-shadow), 0 10px 25px rgba(0, 0, 0, 0.1);
-}
+  .glass-card:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
 
-/* Additional glassmorphism variants */
-.glass-effect-strong {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-}
+  /* Additional glassmorphism variants */
+  .glass-effect-strong {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg;
+  }
 
-.dark .glass-effect-strong {
-  background: rgba(16, 18, 27, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+  .glass-effect-subtle {
+    @apply bg-white/40 dark:bg-gray-900/40 backdrop-blur-sm border border-white/10 dark:border-white/5 shadow-md;
+  }
 
-.glass-effect-subtle {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.1);
-}
-
-.dark .glass-effect-subtle {
-  background: rgba(16, 18, 27, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-navbar {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  transition: all 0.3s ease;
-}
-
-.dark .glass-navbar {
-  background: rgba(10, 10, 10, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  .glass-navbar {
+    @apply bg-white/85 dark:bg-gray-900/85 backdrop-blur-md border-b border-white/20 dark:border-white/5 shadow-sm sticky top-0 z-50 transition-all;
+  }
 }
 
 /* Colorful background gradient for hero section */
@@ -164,12 +124,12 @@ body {
   animation-delay: 2s;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
 .animation-delay-3000 {
   animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
 }
 
 .animation-delay-5000 {
