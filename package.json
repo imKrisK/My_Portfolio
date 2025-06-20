@@ -28,7 +28,6 @@
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "10.4.16",
     "browserslist": "4.22.3",
-    "caniuse-lite": "1.0.30001585",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.0",
     "node-releases": "2.0.13",
